@@ -12,7 +12,16 @@ November 2020
     <img src="_readme-img/svelte-logo.png">
 </h1>
 
-## Concepts covered
+## About
+
+Applcation that fetches a Pokémon API.
+
+It displays Pokémons by name (in French) and display an image of the creature.
+
+![capture](_readme-img/capture01.png)
+
+![capture](_readme-img/capture02.png)
+
 
 Tip: disable *autosave* when you work with api, otherwise it will make tons of not useful request.
 
