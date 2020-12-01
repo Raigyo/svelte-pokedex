@@ -1,10 +1,18 @@
 <script>
+  import {createEventDispatcher} from 'svelte';
 
+  const dispatch = createEventDispatcher(); // custom event
+
+  let search = '';
+  const searchFunc = () => {
+    dispatch('search-poke', {txt: search}) // event listener
+    search = "";
+  }
 </script>
 
-<form class="form-search">
+<form class="form-search" on:submit|preventDefault={searchFunc}>
   <label for="search">Search a Pokémon</label>
-  <input type="text" id="researchcherche" placeholder="Search a Pokémon">
+  <input bind:value={search} type="text" id="researchcherche" placeholder="Search a Pokémon">
   <button type="submit">Search</button>
 </form>
 

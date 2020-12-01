@@ -1,5 +1,7 @@
 <script>
   import SearchBar from './SearchBar.svelte'
+  import Card from './Card.svelte'
+  import {v4 as uuidv4} from 'uuid';
 
   let allPokemon = [];
   let finalArray = [];
@@ -29,7 +31,7 @@
     fetch(url)
       .then(response => response.json())
       .then(function(pokeData){
-        //objPokemonFull.pic = pokeData.sprites.back_default; // images
+        objPokemonFull.pic = pokeData.sprites.back_default; // images
         // console.log(pokeData);
         // we make a request by pokemon species to retrieve some other data (fr name)
         fetch(`https://pokeapi.co/api/v2/pokemon-species/${nameP}`)
@@ -42,16 +44,32 @@
         .then(() => {
             // console.log(allPokemon);
             finalArray = allPokemon.slice(0,20) // array with only 20 pokemons
-            // allPokemon = allPokemon;
+            allPokemon = allPokemon; // update var
         })
       })
   }
 
+  const goSearch = (event) => {
+    console.log(event.detail.txt);
+
+    let contentSearch = event.detail.txt;
+
+    /* excludes all except the pokemon searched*/
+    //allPokemon = allPokemon.filter(el => el.name.includes(contentSearch))
+    finalArray = allPokemon.filter(el => el.name.includes(contentSearch))
+  }
+
 </script>
 
-<SearchBar />
+<SearchBar on:search-poke={goSearch} />
 <div class="content">
 <!-- List -->
+{#each finalArray as pokemon (uuidv4())}
+  <Card name={pokemon.name} pic={pokemon.pic} />
+{/each}
+<!-- {#each allPokemon as pokemon (uuidv4())}
+  <Card name={pokemon.name} pic={pokemon.pic} />
+{/each} -->
 </div>
 
 <style>
@@ -67,7 +85,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  background: orange;
+  /* background: orange; */
 }
 
 </style>
